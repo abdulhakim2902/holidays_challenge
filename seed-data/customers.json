@@ -1,0 +1,16 @@
+[
+    {
+        "identityNumber": "3271050110890008",
+        "fullName": "Abdul Hakim",
+        "address": "Bogor",
+        "birthDate": "1989-10-01",
+        "gender": "male"
+    },
+    {
+        "identityNumber": "3271050910900001",
+        "fullName": "Tati Nurhayati",
+        "address": "Bogor",
+        "birthDate": "1990-10-09",
+        "gender": "female"
+    }
+]

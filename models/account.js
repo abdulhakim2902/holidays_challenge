@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   };
   Account.init({
     type: DataTypes.STRING,
-    balance: DataTypes.STRING
+    balance: DataTypes.FLOAT,
+    accountNumber: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Account',
