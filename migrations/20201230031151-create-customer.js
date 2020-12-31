@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       birthDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       accountNumber: {
         type: Sequelize.STRING

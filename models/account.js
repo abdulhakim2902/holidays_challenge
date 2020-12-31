@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+const randomAccount = require('../helpers/randomAccount');
+
 module.exports = (sequelize, DataTypes) => {
   class Account extends Model {
     /**
@@ -13,14 +15,31 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Account.belongsTo(models.Customer, {foreignKey: 'customer_id'})
     }
-  };
-  Account.init({
+
+    static checkAccountNumber(newAccount) {
+      let randomAccountNumber = randomAccount();
+
+      return Account.findOne({ where: { accountNumber: randomAccountNumber }})
+          .then(account => {
+            if (!account) {
+              newAccount.accountNumber = randomAccountNumber;
+              return Account.create(newAccount)
+            } else {
+              Account.checkAccountNumber(newAccount)
+            }
+          })   
+    }
+  }; 
+  Account.init({  
     type: DataTypes.STRING,
-    balance: DataTypes.FLOAT,
-    accountNumber: DataTypes.STRING
+    balance: {
+      type: DataTypes.FLOAT
+    },
+    accountNumber: DataTypes.STRING,
+    customer_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Account',
+    modelName: 'Account'
   });
   return Account;
 };

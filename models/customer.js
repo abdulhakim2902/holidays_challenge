@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, ValidationError
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Customer extends Model {
@@ -15,10 +15,43 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Customer.init({
-    identityNumber: DataTypes.STRING,
-    fullName: DataTypes.STRING,
+    identityNumber: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Identity Number must be filled'
+        },
+        len: {
+          args: [16, 20],
+          msg: 'Identity Number minimum 16 characters and maximum 20 characters' 
+        },
+        isUnique: (value) => {
+          return Customer.findOne({where: {identityNumber: value}})
+            .then(customer => {
+              if (customer) {
+                throw new ValidationError('Duplicate Identity Number')
+              }
+            })
+        }
+      }
+    },
+    fullName: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Full name must be filled'
+        }
+      }
+    },
     address: DataTypes.STRING,
-    birthDate: DataTypes.DATE,
+    birthDate: {
+      type: DataTypes.DATEONLY,
+      validate: {
+        notEmpty: {
+          msg: 'Birth Date must be filled'
+        }
+      }
+    },
     gender: DataTypes.STRING
   }, {
     sequelize,
