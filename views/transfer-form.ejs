@@ -33,10 +33,11 @@
                     <tr style="text-align: left;">
                         <td class="align-middle">Transfer From</td>
                         <td class="align-middle">:</td>
-                        <td class="align-middle">
+                        <td class="align-middle" style="width: 641px;">
                             <strong>
                                 <%= myAccount.accountNumber %> <%= myAccount.type %> <%= new Number(myAccount.balance).toLocaleString('en-ID', {style: 'currency', currency: 'IDR'}) %>     
                             </strong>
+                            <span style="float: right; color: red"><%= error %></span>
                         </td>
                     </tr>
                     <tr style="text-align: left;">
@@ -65,7 +66,7 @@
                         <td>
                             <div class="input-group input-group-sm">
                                 <select name="accountNumber" class="form-control">
-                                    <option selected disabled>-- Select --</option>
+                                    <!-- <option selected disabled>-- Select Account --</option> -->
                                     <% accounts.forEach(account => { %> 
                                     
                                     <option value="<%= account.accountNumber %>"><%= account.accountNumber %> - <%= account.Customer.fullName %></option>

@@ -116,7 +116,7 @@ class Controller {
         let error = '';
 
         if (req.query.msg) {
-            error = JSON.parse(req.query.msg)
+            error = req.query.msg
         }
         
         Customer.findOne({
@@ -136,23 +136,18 @@ class Controller {
 
         Account.checkAccountNumber(newAccount)
             .then(() => res.redirect(`/customers/${newAccount.customer_id}/accounts`))
-            .catch(err => {
-                let error = {};
-                err.errors.forEach(e => {
-                    if (error[e.path] === undefined) {
-                        error[e.path] = e.message;
-                    }
-                })
-
-                let errorStringify = JSON.stringify(error);
-                res.redirect(`/customers/${newAccount.customer_id}/accounts?msg=${errorStringify}`)
-            })
+            .catch(err => res.redirect(`/customers/${newAccount.customer_id}/accounts?msg=${err.message}`))
     }
 
     static transferForm(req, res) {
         let customer_id = req.params.idCustomer;
         let account_id = req.params.idAccount;
         let myAccount = '';
+        let error = '';
+
+        if (req.query.msg) {
+            error = req.query.msg;
+        }
 
         Account.findOne({ where: {id: account_id}})
             .then(account => {
@@ -166,7 +161,7 @@ class Controller {
                 })
             })
             .then(accounts => {
-                res.render('transfer-form', { accounts, myAccount, customer_id, account_id })
+                res.render('transfer-form', { accounts, myAccount, customer_id, account_id, error })
             })
             .catch(err => res.send(err.message))
     }
@@ -183,7 +178,10 @@ class Controller {
         Account.findOne({where: {id: account_id}})
             .then(account => {
                 let remaining = account.balance - money.amount;
-                return Account.update({balance: remaining}, {where: {id: account.id}})
+                return Account.update({balance: remaining}, {
+                    where: {id: account.id},
+                    individualHooks: true
+                })
             })
             .then(() => {
                 return Account.findOne({where: {accountNumber: money.accountNumber}})
@@ -193,7 +191,7 @@ class Controller {
                 return Account.update({balance: current}, {where: {id: account.id}})
             })
             .then(() => res.redirect(`/customers/${customer_id}/accounts`))
-            .catch(err => res.send(err.message))
+            .catch(err => res.redirect(`/customers/${customer_id}/accounts/${account_id}/transfer?msg=${err.message}`))
     }
 }
 

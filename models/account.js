@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, ValidationError
 } = require('sequelize');
 const randomAccount = require('../helpers/randomAccount');
 
@@ -39,7 +39,19 @@ module.exports = (sequelize, DataTypes) => {
     customer_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Account'
+    modelName: 'Account',
+    hooks: {
+      beforeCreate(accountInstance, option) {
+        if (+accountInstance.balance < 500000) {
+          throw new Error('Minimum balance for new Accout: Rp500.000')
+        }
+      },
+      beforeUpdate(accountInstance, option) {
+        if (accountInstance.balance < 0) {
+          throw new Error('Insufficient balance')
+        }
+      }
+    }
   });
   return Account;
 };
