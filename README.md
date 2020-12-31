@@ -134,4 +134,4 @@ Jika button `TRANSFER` di-klik, maka proses yang terjadi adalah:
 
 
 # DEMO APLIKASI
-https://hacktiv8-bank.herokuapp.com/
+https://stormy-depths-11868.herokuapp.com/
