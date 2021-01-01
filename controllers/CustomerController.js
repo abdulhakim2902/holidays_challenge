@@ -1,4 +1,3 @@
-const Sequelize = require('sequelize')
 const { Account, Customer } = require('../models');
 const { Op } = require('sequelize');
 
@@ -9,7 +8,9 @@ class Controller {
 
     static viewCustomers(req, res) {
         Customer.findAll({
-            order: [['fullName', 'ASC']]
+            order: [
+                ['fullName', 'ASC']
+            ]
         })
             .then(customers => res.render('customers', {customers}))
             .catch(err => res.send(err.message))
@@ -48,9 +49,8 @@ class Controller {
                         error[e.path][e.validatorKey] = e.message
                     }
                 })
-                let errorsStringify = JSON.stringify([error])
 
-                res.redirect(`/customers/register?msg=${errorsStringify}`)
+                res.redirect(`/customers/register?msg=${JSON.stringify([error])}`)
             })
     }
 
@@ -120,10 +120,10 @@ class Controller {
         }
         
         Customer.findOne({
-            where: {id},
+            where: { id },
             include: Account
         })
-            .then(customer => res.render('accounts', {customer, error}))
+            .then(customer => res.render('accounts', { customer, error }))
             .catch(err => res.send(err.message))
     }
 
@@ -153,16 +153,18 @@ class Controller {
             .then(account => {
                 myAccount = account;
                 return Account.findAll({
-                    order: [['accountNumber', 'ASC']],
+                    order: [
+                        ['accountNumber', 'ASC']
+                    ],
                     where: {
-                        id: { [Op.ne]: [account_id] }
+                        id: { 
+                            [Op.ne]: [account_id]
+                        }
                     },
                     include: Customer
                 })
             })
-            .then(accounts => {
-                res.render('transfer-form', { accounts, myAccount, customer_id, account_id, error })
-            })
+            .then(accounts => res.render('transfer-form', { accounts, myAccount, customer_id, account_id, error }))
             .catch(err => res.send(err.message))
     }
 

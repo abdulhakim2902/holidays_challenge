@@ -1,5 +1,5 @@
 module.exports = () => {
-    let stringNumber = '0'
+    let stringNumber = ''
 
     while (stringNumber.length != 10) {
         let randomNumber = Math.floor(Math.random() * 10000000000);
