@@ -24,9 +24,7 @@ module.exports = (sequelize, DataTypes) => {
             if (!account) {
               newAccount.accountNumber = randomAccountNumber;
               return Account.create(newAccount)
-            } else {
-              Account.checkAccountNumber(newAccount)
-            }
+            } else Account.checkAccountNumber(newAccount)
           })   
     }
   }; 
@@ -42,14 +40,10 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Account',
     hooks: {
       beforeCreate(accountInstance, option) {
-        if (+accountInstance.balance < 500000) {
-          throw new Error('Minimum balance for new Accout: Rp500.000')
-        }
+        if (+accountInstance.balance < 500000) throw new Error('Minimum balance for new Accout: Rp500.000')
       },
       beforeUpdate(accountInstance, option) {
-        if (accountInstance.balance < 0) {
-          throw new Error('Insufficient balance')
-        }
+        if (accountInstance.balance < 0) throw new Error('Insufficient balance')
       }
     }
   });

@@ -15,20 +15,20 @@
         integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
 
     <title>Accounts</title>
 </head>
 
 <body>
-    <div class="container mt-5">
-        <div class="accounts">
-            <div style="text-align: center;" class="title mx-auto mb-4">
-                <h2 class="mb-4" style="text-align: center;">Good Day, <%= customer.fullName %></h2>
-            </div>
-
-            <table class="table table-striped middle">
+    <div class="container-account mx-auto mt-5">
+        <div class="text-center mx-auto mb-5">
+            <h2>Good Day, <%= customer.fullName %></h2>
+        </div>
+        <div class="accounts-table">
+            <table class="table table-striped text-center">
                 <thead>
-                    <tr style="text-align: center;">
+                    <tr>
                         <th class="align-middle">Account Number</th>
                         <th class="align-middle">Type</th>
                         <th class="align-middle">Balance</th>
@@ -39,13 +39,9 @@
                 <tbody>
                     <% customer.Accounts.forEach(account => { %>
                                 
-                    <tr style="text-align: center;">
-                        <td class="align-middle">
-                            <%= account.accountNumber %>
-                        </td>
-                        <td class="align-middle">
-                            <%= account.type %>
-                        </td>
+                    <tr>
+                        <td class="align-middle"><%= account.accountNumber %></td>
+                        <td class="align-middle"><%= account.type %></td>
                         <td class="align-middle">
                             <%= new Number(account.balance).toLocaleString('en-ID', {style: 'currency', currency: 'IDR'}) %>
                         </td>
@@ -59,12 +55,12 @@
             </table>
         </div>
 
-        <div class="add-account mx-automx mt-5">
-            <div style="text-align: center;" class="title mx-auto mb-4">
-                <h2 class="mb-4" style="text-align: center;">ADD ACCOUNT</h2>
+        <div class="add-account-form">
+            <div class="text-center mx-auto mb-4">
+                <h2>ADD ACCOUNT</h2>
             </div>
         
-            <form action="#" method="POST">
+            <form action="/customers/<%= customer.id %>/accounts" method="POST">
                 <label class="mb-2" for="">Account Type</label>
                 <div class="input-group mb-3">
                     <select name="type" class="form-control">
@@ -75,7 +71,7 @@
                     </select>
                 </div> 
 
-                <label class="mb-2" for="">Balance</label><span style="float: right; color: red"><%= error %></span>
+                <label class="mb-2" for="">Balance</label><span class="error"><%= error %></span>
                 <div class="input-group mb-4">
                     <input name="balance" type="number" class="form-control" placeholder="0">
                 </div>

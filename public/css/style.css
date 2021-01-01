@@ -1,0 +1,75 @@
+/* INDEX */
+.container-index {
+    height: 100vh;
+    line-height: 100vh;
+}
+
+/* CUSTOMER */
+.container-customer {
+    width: 1500px;
+}
+
+/* FORM (REGISTER & EDIT) */
+.container-form {
+    width: 500px;
+}
+
+.container-form .error {
+    color: red;
+    height: 41px;
+}
+
+.container-form .isUnique-error, 
+.container-form .notEmpty-error {
+    float: right;
+    color: red;
+}
+
+.container-form .button {
+    margin-top: 70px
+}
+
+/* ACCOUNT */
+.container-account {
+    width: 1500px;
+}
+
+.container-account .accounts-table {
+    width: 880px;
+    float: left;
+}
+
+.container-account .add-account-form {
+    width: 500px;
+    float: right;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+}
+
+.container-account .error {
+    float: right;
+    color: red;
+}
+
+/* TRANSFER */
+.container-transfer {
+    width: 1000px;
+}
+
+.container-transfer .title {
+    width: 130px
+}
+
+.container-transfer .symbol {
+    width: 20px
+}
+
+.container-transfer .button {
+    padding-left: 20px;
+}
+
+.container-transfer .error {
+    float: right;
+    color: red;
+}

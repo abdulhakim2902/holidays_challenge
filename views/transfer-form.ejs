@@ -15,7 +15,7 @@
         integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="/css/style.css">
     <style>
         body {
             font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
@@ -27,42 +27,42 @@
 
 <body>
 
-    <div class="container mx-automx mt-5">    
+    <div class="container-transfer mx-auto mt-5 text-left">    
         <form action="/customers/<%= customer_id %>/accounts/<%= account_id %>/transfer" method="POST">
-            <table style="width: 100%">
-                <tr style="text-align: left;">
-                    <td class="align-middle">Transfer From</td>
-                    <td class="align-middle">:</td>
-                    <td class="align-middle" style="width: 641px;">
+            <table>
+                <tr>
+                    <td class="title align-middle">Transfer From</td>
+                    <td class="symbol align-middle">:</td>
+                    <td class="align-middle" width="600">
                         <strong>
                             <%= myAccount.accountNumber %> <%= myAccount.type %> <%= new Number(myAccount.balance).toLocaleString('en-ID', {style: 'currency', currency: 'IDR'}) %>     
                         </strong>
-                        <span style="float: right; color: red"><%= error %></span>
+                        <span class="error"><%= error %></span>
                     </td>
                 </tr>
-                <tr style="text-align: left;">
-                    <td class="align-middle">Amount</td>
-                    <td class="align-middle">:</td>
+                <tr>
+                    <td class="title align-middle">Amount</td>
+                    <td class="symbol align-middle">:</td>
                     <td class="align-middle">
                         <div class="input-group input-group-sm">
                             <input name="amount" type="number" class="form-control" placeholder="0">
                         </div>
                     </td>
-                    <td style="padding-left: 20px; " class="align-middle" rowspan="3">
+                    <td class="button align-middle" rowspan="3">
                         <div class="d-grid gap-2 mx-auto">
                             <button style="width: 100%; height: 65px;" class="btn btn-primary btn-sm">TRANSFER</button>
                         </div>
                     </td>
-                    <td style="padding-left: 20px; " class="align-middle" rowspan="3">
+                    <td class="button align-middle" rowspan="3">
                         <div class="d-grid gap-2 mx-auto">
                             <a style="width: 100%; height: 65px; line-height: 53px;" href="/customers/<%= customer_id %>/accounts" class="btn btn-danger">CANCEL</a>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td class="align-middle">Transfer To</td>
-                    <td>:</td>
-                    <td>
+                    <td class="title align-middle">Transfer To</td>
+                    <td class="symbol align-middle">:</td>
+                    <td class="align-middle">
                         <div class="input-group input-group-sm">
                             <select name="accountNumber" class="form-control">
                                 <!-- <option selected disabled>-- Select Account --</option> -->

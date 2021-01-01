@@ -28,9 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         isUnique: (value) => {
           return Customer.findOne({where: {identityNumber: value}})
             .then(customer => {
-              if (customer) {
-                throw new ValidationError('Duplicate Identity Number')
-              }
+              if (customer) throw new ValidationError('Duplicate Identity Number')
             })
         }
       }

@@ -126,9 +126,7 @@ class Controller {
         let myAccount = '';
         let error = '';
 
-        if (req.query.msg) {
-            error = req.query.msg;
-        }
+        if (req.query.msg) error = req.query.msg;
 
         Account.findOne({ where: {id: account_id}})
             .then(account => {
@@ -152,7 +150,6 @@ class Controller {
     static transfer(req,res) {
         let customer_id = req.params.idCustomer;
         let account_id = req.params.idAccount;
-
         let money = {
             amount: +req.body.amount,
             accountNumber: req.body.accountNumber

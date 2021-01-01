@@ -1,6 +1,6 @@
-<div class="container mx-automx mt-5">
-    <div style="text-align: center;" class="title mx-auto mb-4">
-        <h2 class="mb-4" style="text-align: center;"><%= status.toUpperCase() %> FORM</h2>
+<div class="container-form mx-auto mt-5">
+    <div class="mb-4">
+        <h2 class="text-center"><%= status.toUpperCase() %> FORM</h2>
     </div>
 
     <% if (status === "register") { %> 
@@ -8,16 +8,20 @@
     <% } else if (status === "edit") { %> 
     <form action="/customers/<%= customer.id %>/editProfile" method="POST">
     <% } %>
-        <label class="mb-2" for="">ID Number:</label>
+        <div class="error mb-3">
+            <span>
+            <% if (errors.identityNumber && !errors.identityNumber.isUnique) { %>
+                <%= errors.identityNumber.notEmpty %><br>
+                <%= errors.identityNumber.len %>
+            <% } %> 
+            </span>
+        </div>
 
-        <span style="float: right; color: red">
-        <% if (errors.identityNumber) { %>
-            <% if (errors.identityNumber.isUnique) { %> 
+        <label class="mb-2" for="">ID Number:</label>
+        <span class="isUnique-error">
+            <% if (errors.identityNumber && errors.identityNumber.isUnique) { %> 
                 <%= errors.identityNumber.isUnique %>
-            <% } else { %> 
-                <%= errors.identityNumber.notEmpty %> & <%= errors.identityNumber.len %>
             <% } %>
-        <% } %> 
         </span>
 
         <div class="input-group mb-3">
@@ -25,7 +29,7 @@
             <input name="identityNumber" type="text" class="form-control" placeholder="Input your id number" value="<%= customer.identityNumber ? customer.identityNumber : '' %>">
         </div>
 
-        <label class="mb-2" for="">Full Name:</label><span style="float: right; color: red"><%= errors.fullName ? errors.fullName.notEmpty : '' %></span>
+        <label class="mb-2" for="">Full Name:</label><span class="notEmpty-error"><%= errors.fullName ? errors.fullName.notEmpty : '' %></span>
         <div class="input-group mb-3">
             <span style="width: 44px" class="input-group-text"><i style="margin: 0 auto" class="fas fa-user"></i></span>
             <input name="fullName" type="text" class="form-control" placeholder="Input your full name" value="<%= customer.fullName ? customer.fullName : '' %>">
@@ -37,7 +41,7 @@
             <input name="address" type="text" class="form-control" placeholder="Input your address" value="<%= customer.address ? customer.address : '' %>">
         </div>
 
-        <label class="mb-2" for="">Birth Date:</label><span style="float: right; color: red"><%= errors.birthDate ? errors.birthDate.notEmpty : '' %></span>
+        <label class="mb-2" for="">Birth Date:</label><span class="notEmpty-error"><%= errors.birthDate ? errors.birthDate.notEmpty : '' %></span>
         <div class="input-group mb-3">
             <span style="width: 44px" class="input-group-text"><i style="margin: 0 auto" class="far fa-calendar-alt"></i></span>
             <input name="birthDate" type="date" class="form-control" value="<%= customer.birthDate ? customer.birthDate : '2000-01-01' %>">
@@ -52,9 +56,9 @@
             <label style="width: 48%; float: right" class="btn btn-outline-danger" for="danger-outlined">Female</label>
         </div>
 
-        <div style="margin-top: 100px;" class="d-grid gap-2 mx-auto">
-            <button style="width: 100%" class="btn btn-primary"><%= status.toUpperCase() %></button>
-            <a style="width: 100%" href="/customers" class="btn btn-info btn-danger">CANCEL</a>
+        <div class="button d-grid gap-2 mx-auto">
+            <button class="btn btn-primary"><%= status.toUpperCase() %></button>
+            <a href="/customers" class="btn btn-info btn-danger">CANCEL</a>
         </div>
     </form>
 </div>
