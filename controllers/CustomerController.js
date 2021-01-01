@@ -19,9 +19,7 @@ class Controller {
     static registerForm(req, res) {
         let errors = '';
 
-        if (req.query.msg) {
-            errors = JSON.parse(req.query.msg)[0]
-        }
+        if (req.query.msg) errors = JSON.parse(req.query.msg)[0]
 
         res.render('register-form', { customer: {}, errors })
     }
@@ -41,13 +39,8 @@ class Controller {
                 let error = {}
 
                 err.errors.forEach(e => {
-                    if (error[e.path] === undefined) {
-                        error[e.path] = {}
-                    }
-
-                    if (error[e.path][e.validatorKey] === undefined) {
-                        error[e.path][e.validatorKey] = e.message
-                    }
+                    if (error[e.path] === undefined) error[e.path] = {}
+                    if (error[e.path][e.validatorKey] === undefined) error[e.path][e.validatorKey] = e.message
                 })
 
                 res.redirect(`/customers/register?msg=${JSON.stringify([error])}`)
@@ -58,13 +51,12 @@ class Controller {
         let id = req.params.idCustomer;
         let errors = '';
 
-        if (req.query.msg) {
-            errors = JSON.parse(req.query.msg)[0]
-        }
+        if (req.query.msg) errors = JSON.parse(req.query.msg)[0]
 
         Customer.findOne({ where: { id } })
             .then(customer => res.render('edit-form', { customer, errors }))
-            .catch(err => res.send(err.message))    }
+            .catch(err => res.send(err.message))    
+    }
 
     static edit(req, res) {
         let id = req.params.idCustomer;
@@ -83,9 +75,8 @@ class Controller {
             }
         })
             .then(customer => {
-                if (!customer) {
-                    return Customer.update(updateCustomer, { where: { id } })
-                } else {
+                if (!customer) return Customer.update(updateCustomer, { where: { id } })
+                else {
                     delete updateCustomer.identityNumber
                     return Customer.update(updateCustomer, { where: { id } })
                 }
@@ -95,19 +86,11 @@ class Controller {
                 let error = {}
 
                 err.errors.forEach(e => {
-                    if (error[e.path] === undefined) {
-                        error[e.path] = {}
-                    }
-
-                    if (error[e.path][e.validatorKey] === undefined) {
-                        error[e.path][e.validatorKey] = e.message
-                    }
+                    if (error[e.path] === undefined) error[e.path] = {}
+                    if (error[e.path][e.validatorKey] === undefined) error[e.path][e.validatorKey] = e.message
                 })
 
-                let errorsStringify = JSON.stringify([error])
-                console.log(error);
-
-                res.redirect(`/customers/${id}/editProfile?msg=${errorsStringify}`)
+                res.redirect(`/customers/${id}/editProfile?msg=${JSON.stringify([error])}`)
             })
     }
 
@@ -115,9 +98,7 @@ class Controller {
         let id = req.params.idCustomer;
         let error = '';
 
-        if (req.query.msg) {
-            error = req.query.msg
-        }
+        if (req.query.msg) error = req.query.msg
         
         Customer.findOne({
             where: { id },
